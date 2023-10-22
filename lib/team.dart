@@ -1,13 +1,12 @@
 import 'package:dto/transaction.dart';
-import 'package:dto/user.dart';
 
 class Team {
   final String title;
   final String? picturePath;
   final List<String>? tags;
   final DateTime startDate;
-  final User owner;
-  final List<User> users;
+  final String owner;
+  final List<String> users;
   final List<Transaction>? transactions;
 
   const Team(
@@ -25,8 +24,8 @@ class Team {
       picturePath: json['picturePath'],
       tags: json['tags'] == null ? [] : json['tags'].cast<String>(),
       startDate: json['startDate'].toDate(),
-      owner: User.fromJson(json['owner']),
-      users: json['users'].map<User>((user) => User.fromJson(user)).toList(),
+      owner: json['owner'],
+      users: json['users'] == null ? [] : json['users'].cast<String>(),
       transactions: json['transactions']
               ?.map<Transaction>(
                   (transaction) => Transaction.fromJson(transaction))
@@ -41,8 +40,8 @@ class Team {
       'picturePath': picturePath,
       'tags': tags != null ? tags!.toList() : [],
       'startDate': startDate,
-      'owner': 'users/${owner.email}',
-      'users': users.map((user) => 'users/${user.email}').toList(),
+      'owner': 'users/$owner',
+      'users': users.map((user) => 'users/$user').toList(),
       'transactions': transactions != null
           ? transactions?.map((transaction) => transaction.toJson()).toList()
           : [],
